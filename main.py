@@ -29,8 +29,8 @@ def regex(url):
         jkforum.main(re_jkforum.group(0))
 
 def main():
-    # url = input('Input URL: ')
-    url = 'https://www.jkforum.net/thread-12134822-1-1.html?number=6'
+    url = input('Input URL: ')
+    # url = 'https://www.jkforum.net/thread-12134822-1-1.html?number=6'
     regex(url)
     cwd = os.getcwd() # Current Working Directory
     aria2c(cwd)

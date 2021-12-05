@@ -1,4 +1,4 @@
-import re, os, subprocess
+import re, os, subprocess, sys
 
 def regex(url, downloadDir):
     os.chdir(downloadDir)
@@ -29,8 +29,11 @@ def regex(url, downloadDir):
         jkforum.main(re_jkforum.group(0))
 
 def main():
-    url = input('Input URL: ')
-    downloadDir = './download'    
+    # python main.py <downloadDir> <url>
+    downloadDir = sys.argv[1]
+    url = sys.argv[2]
+    # url = input('Input URL: ')
+    # downloadDir = './download'    
     if os.path.isdir(downloadDir) is not True:
         os.mkdir(downloadDir)
 

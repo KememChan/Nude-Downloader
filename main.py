@@ -1,7 +1,7 @@
 import re, os, subprocess
 
-def regex(url):
-    os.chdir('./download')
+def regex(url, downloadDir):
+    os.chdir(downloadDir)
     re_buondua = re.search(r'buondua.com', url)
     re_telegraph = re.search(r'telegra.ph', url)
     re_everia = re.search(r'everia.club', url)
@@ -30,10 +30,12 @@ def regex(url):
 
 def main():
     url = input('Input URL: ')
-    # url = 'https://www.jkforum.net/thread-12134822-1-1.html?number=6'
-    regex(url)
-    cwd = os.getcwd() # Current Working Directory
-    aria2c(cwd)
+    downloadDir = './download'    
+    if os.path.isdir(downloadDir) is not True:
+        os.mkdir(downloadDir)
+
+    regex(url, downloadDir)
+    aria2c(os.getcwd()) # Current Working Directory
 
 def aria2c(cwd):
   subprocess.run(['aria2c', '--continue=true', '-j', '5', '-s', '5', '-i', 'imglink.txt'])

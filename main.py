@@ -1,8 +1,31 @@
 import re, os, subprocess, sys
 
+def main():
+    # python main.py <downloadDir> <url>
+    downloadDir = sys.argv[1]
+    url = sys.argv[2]
+
+    # url = 'https://fdzone.org/forum/ubbthreads.php?ubb=showflat&Number=3445'
+    # downloadDir = './download'    
+
+    if os.path.isdir(downloadDir) is not True:
+        os.mkdir(downloadDir)
+
+    cwd = os.getcwd() # Current Working Directory
+    regex(url, downloadDir)
+    aria2c(cwd)
+
+def aria2c(cwd):
+  subprocess.run(['aria2c', '--continue=true', '-j', '5', '-s', '5', '-i', 'imglink.txt'])
+  subprocess.run(['rm', '-r', 'imglink.txt'])
+  subprocess.run(['clear'])
+  os.chdir(cwd)
+  print('Download Successfully')
+
 def regex(url, downloadDir):
     os.chdir(downloadDir)
     re_buondua = re.search(r'buondua.com', url)
+    re_fdzone = re.search(r'fdzone.org', url)
     re_telegraph = re.search(r'telegra.ph', url)
     re_everia = re.search(r'everia.club', url)
     re_173mt = re.search(r'173mt.com', url)
@@ -12,6 +35,9 @@ def regex(url, downloadDir):
     if re_buondua:
         from web import buondua
         buondua.main(url)
+    if re_fdzone:
+        from web import fdzone
+        fdzone.main(url)
     if re_telegraph:
         from web import telegraph
         telegraph.main(url)
@@ -27,25 +53,6 @@ def regex(url, downloadDir):
     if re_jkforum:
         from web import jkforum
         jkforum.main(re_jkforum.group(0))
-
-def main():
-    # python main.py <downloadDir> <url>
-    downloadDir = sys.argv[1]
-    url = sys.argv[2]
-    # url = input('Input URL: ')
-    # downloadDir = './download'    
-    if os.path.isdir(downloadDir) is not True:
-        os.mkdir(downloadDir)
-
-    regex(url, downloadDir)
-    aria2c(os.getcwd()) # Current Working Directory
-
-def aria2c(cwd):
-  subprocess.run(['aria2c', '--continue=true', '-j', '5', '-s', '5', '-i', 'imglink.txt'])
-  subprocess.run(['rm', '-r', 'imglink.txt'])
-  subprocess.run(['clear'])
-  os.chdir(cwd)
-  print('Download Successfully')
 
 if __name__ == "__main__":
     main()

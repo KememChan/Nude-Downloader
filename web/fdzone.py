@@ -8,4 +8,4 @@ def main(url):
     func.write_source_url(url)
     images = soup.find_all('img', class_='post-image')
     for image_count, image_link in enumerate(images, 1):
-        open('imglink.txt', 'a+').write(image_link['src'] + '\n' + f'  out={image_count}\n')
+        open('imglink.txt', 'a+').write(image_link['src'] + '\n' + f'  out={image_count}.jpg\n')

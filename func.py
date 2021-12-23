@@ -1,5 +1,5 @@
 import requests
-import os
+import os, re
 from bs4 import BeautifulSoup
 
 def write_source_url(url):
@@ -10,10 +10,10 @@ def get_url(url):
   soup = BeautifulSoup(r.content, "html.parser", from_encoding = 'utf-8')
   return soup
 
-def make_folder(find):
-  folder = find
+def make_folder(folder):
+  folder = re.sub('[p#%&\\<>*?/$!\'":@+`|=]', '', folder)
   try:
-    os.mkdir(os.path.join(os.getcwd(), folder))
+    os.mkdir(folder)
     print(f'Folder Created: {folder}')
   except:pass
-  os.chdir(os.path.join(os.getcwd(), folder))
+  os.chdir(folder)

@@ -8,5 +8,5 @@ def main(url):
         func.make_folder(folder.text)
     func.write_source_url(url)
     image_count = None
-    for image_count, image_link in enumerate(soup.find_all(src=re.compile('.+mymypic.net.+')), 1):
+    for image_count, image_link in enumerate(soup.find_all(src=re.compile(r'.+mymypic\.net.+thumb.+')), 1):
        open('imglink.txt', 'a+').write(image_link['src'] + '\n' + '  out=' + str(image_count) + '.jpg\n')

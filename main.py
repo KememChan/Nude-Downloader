@@ -5,19 +5,17 @@ def main():
     downloadDir = sys.argv[1]
     url = sys.argv[2]
 
-    # url = 'https://fdzone.org/forum/ubbthreads.php?ubb=showflat&Number=3445'
-    # downloadDir = './download'    
-
     if os.path.isdir(downloadDir) is not True:
         os.mkdir(downloadDir)
 
     cwd = os.getcwd() # Current Working Directory
     regex(url, downloadDir)
-    aria2c(cwd)
+    if os.path.isfile('imglink.txt'):
+        aria2c(cwd)
 
 def aria2c(cwd):
   subprocess.run(['aria2c', '--continue=true', '-j', '5', '-s', '5', '-i', 'imglink.txt'])
-  subprocess.run(['rm', '-r', 'imglink.txt'])
+  subprocess.run(['rm', '-rf', 'imglink.txt'])
   subprocess.run(['clear'])
   os.chdir(cwd)
   print('Download Successfully')
@@ -30,8 +28,12 @@ def regex(url, downloadDir):
     re_everia = re.search(r'everia.club', url)
     re_173mt = re.search(r'173mt.com', url)
     re_hitxhot = re.search(r'(.+hitxhot\.com/gallerys/.+\.html)', url)
-    re_jkforum = re.search(r'.+www\.jkforum\.net/thread.+\.html', url)
+    re_jkforum = re.search(r'jkforum.net', url)
+    re_asiantolick = re.search(r'.+asiantolick.com/post-.+', url)
 
+    if re_asiantolick:
+        from web import AsianToLick
+        AsianToLick.main(url)
     if re_buondua:
         from web import buondua
         buondua.main(url)
@@ -52,7 +54,7 @@ def regex(url, downloadDir):
         hitxhot.main(re_hitxhot.group(0))
     if re_jkforum:
         from web import jkforum
-        jkforum.main(re_jkforum.group(0))
+        jkforum.main(url)
 
 if __name__ == "__main__":
     main()

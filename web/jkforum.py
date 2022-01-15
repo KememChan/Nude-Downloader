@@ -8,5 +8,8 @@ def main(url):
         func.make_folder(folder.text)
     func.write_source_url(url)
     image_count = None
-    for image_count, image_link in enumerate(soup.find_all(src=re.compile(r'.+mymypic.+')), 1):
-       open('imglink.txt', 'a+').write(image_link['src'] + '\n' + '  out=' + str(image_count) + '.jpg\n')
+    for image_count, image_link in enumerate(soup.find_all('img', onclick=re.compile('zoom.+')), 1):
+        try:
+            open('imglink.txt', 'a+').write(image_link['zoomfile'] + '\n' + '  out=' + str(image_count) + '.jpg\n')
+            # print(image_link['zoomfile'])
+        except:pass

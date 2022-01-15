@@ -16,7 +16,6 @@ def main():
 def aria2c(cwd):
   subprocess.run(['aria2c', '--continue=true', '-j', '5', '-s', '5', '-i', 'imglink.txt'])
   # subprocess.run(['rm', '-rf', 'imglink.txt'])
-  subprocess.run(['clear'])
   os.chdir(cwd)
   print('Download Successfully')
 

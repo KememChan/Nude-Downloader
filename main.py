@@ -1,4 +1,4 @@
-import re, os, subprocess, sys
+import re, os, subprocess, sys, glob
 
 def main():
     # python main.py <downloadDir> <url>
@@ -14,10 +14,14 @@ def main():
         aria2c(cwd)
 
 def aria2c(cwd):
-  subprocess.run(['aria2c', '--continue=true', '-j', '5', '-s', '5', '-i', 'imglink.txt'])
-  # subprocess.run(['rm', '-rf', 'imglink.txt'])
-  os.chdir(cwd)
-  print('Download Successfully')
+	subprocess.run(['aria2c', '--continue=true', '-j', '5', '-s', '5', '-i', 'imglink.txt'])
+	# subprocess.run(['rm', '-rf', 'imglink.txt'])
+	zip_file = glob.glob('*zip')[0]
+	if zip_file:
+		subprocess.run(['7z', 'e', zip_file])
+		# subprocess.run(['rm', '-rf', re.match(r'.*\.zip'))
+	os.chdir(cwd)
+	print('Download Successfully')
 
 def regex(url, downloadDir):
     os.chdir(downloadDir)
@@ -31,8 +35,8 @@ def regex(url, downloadDir):
     re_asiantolick = re.search(r'.+asiantolick.com/post-.+', url)
 
     if re_asiantolick:
-        from web import AsianToLick
-        AsianToLick.main(url)
+        from web import asiantolick
+        asiantolick.main(url)
     if re_buondua:
         from web import buondua
         buondua.main(url)
